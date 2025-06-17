@@ -43,3 +43,5 @@ group :development, :test do
   gem "factory_bot_rails", "~> 6.5"
   gem "faker", "~> 3.5"
 end
+
+gem "jwt", "~> 3.0"
