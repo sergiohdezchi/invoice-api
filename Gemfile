@@ -53,3 +53,5 @@ gem "redis", "~> 5.4"
 gem "redis-rails", "~> 5.0"
 
 gem "will_paginate", "~> 4.0"
+
+gem "letter_opener", "~> 1.10"

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style type="text/css">
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+        color: #333333;
+      }
+      .container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      h1 {
+        font-size: 24px;
+        margin-bottom: 16px;
+        color: #222222;
+        text-align: center;
+      }
+      .intro {
+        font-size: 14px;
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      th, td {
+        border: 1px solid #dddddd;
+        padding: 8px;
+        text-align: left;
+        font-size: 14px;
+      }
+      thead th {
+        background-color: #f8f8f8;
+      }
+      tbody tr:nth-child(even) {
+        background-color: #fbfbfb;
+      }
+      .footer {
+        font-size: 12px;
+        color: #777777;
+        text-align: center;
+        border-top: 1px solid #e0e0e0;
+        padding-top: 12px;
+      }
+      @media only screen and (max-width: 480px) {
+        h1 {
+          font-size: 20px;
+        }
+        th, td {
+          font-size: 12px;
+          padding: 6px;
+        }
+        .intro {
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Top <%= @top_sales.size %> Selling Days</h1>
+
+      <p class="intro">
+        A continuación se muestra el reporte de los días con mayores ventas. 
+        <% if defined?(params) && params[:start_date].present? && params[:end_date].present? %>
+          Período: <strong><%= params[:start_date] %></strong> al <strong><%= params[:end_date] %></strong>.
+        <% end %>
+      </p>
+
+      <table role="presentation">
+        <thead>
+          <tr>
+            <th style="width: 50%;">Fecha</th>
+            <th style="width: 50%;">Ventas Totales</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @top_sales.each do |date, total| %>
+            <tr>
+              <td>
+                <%= 
+                  date.respond_to?(:strftime) ? date.strftime("%Y-%m-%d") : date.to_s 
+                %>
+              </td>
+              <td>
+                <%= number_to_currency(total, unit: "$", delimiter: ",", precision: 2) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+
+      <% if @top_sales.blank? %>
+        <p class="intro">No hay datos de ventas para mostrar.</p>
+      <% end %>
+
+      <p class="footer">
+        Report generated on <%= Time.current.strftime("%Y-%m-%d at %H:%M") %>
+      </p>
+    </div>
+  </body>
+</html>

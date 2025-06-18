@@ -8,3 +8,7 @@ inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 #   Enabled: false
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+AllCops:
+  TargetRubyVersion: 3.3
+  Exclude:
+    - 'app/views/**/*'
