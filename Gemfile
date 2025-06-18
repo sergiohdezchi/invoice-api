@@ -45,3 +45,11 @@ group :development, :test do
 end
 
 gem "jwt", "~> 3.0"
+
+gem "fast_jsonapi", "~> 1.5"
+
+gem "redis", "~> 5.4"
+
+gem "redis-rails", "~> 5.0"
+
+gem "will_paginate", "~> 4.0"
