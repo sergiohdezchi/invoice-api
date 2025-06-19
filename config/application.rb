@@ -28,6 +28,12 @@ module InvoiceApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    if config.api_only
+      middleware.use ActionDispatch::Cookies
+      middleware.use ActionDispatch::Session::CookieStore, key: "_invoice_api_session"
+      middleware.use ActionDispatch::ContentSecurityPolicy::Middleware
+    end
+    config.active_job.queue_adapter = :sidekiq
     # load services from app/services
     config.autoload_paths << Rails.root.join("app", "services")
   end

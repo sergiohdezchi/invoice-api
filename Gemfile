@@ -55,3 +55,7 @@ gem "redis-rails", "~> 5.0"
 gem "will_paginate", "~> 4.0"
 
 gem "letter_opener", "~> 1.10"
+
+gem "rack-cors", "~> 3.0"
+
+gem "sidekiq", "~> 8.0"
