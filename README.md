@@ -2,8 +2,6 @@
 
 **Invoice API** es un backend construido en Ruby on Rails para gestionar facturas. Incluye integración con **PostgreSQL**, **Redis** y **Sidekiq** para el manejo de tareas en segundo plano.
 
-Repositorio oficial: [github.com/sergiohdezchi/invoice-api](https://github.com/sergiohdezchi/invoice-api)
-
 ---
 
 ## 📦 Requisitos
@@ -23,8 +21,10 @@ Repositorio oficial: [github.com/sergiohdezchi/invoice-api](https://github.com/s
 ## 🚀 Instalación
 
 ### Clonar el repositorio
-
-
+```bash
+git clone https://github.com/sergiohdezchi/invoice-api.git
+cd invoice-api
+```
 ### 🐳 Opción A: Usar Docker
 1. Edita .env.example actualiza los datos necesarios:
 ```bash
@@ -76,6 +76,11 @@ DB_NAME_PROD=test
 REDIS_URL=redis://localhost:6379/1 # Redis URL
 
 ```
+2. Instalacion de dependencias
+```bash
+bundle install
+```
+
 2. Iniciar rails
 
 ```bash
