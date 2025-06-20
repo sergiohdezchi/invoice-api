@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
     header = request.headers["Authorization"]
     token = header.split(" ").last if header
 
-    unless token && JwtService.authorized_client?(token)
+    unless token && JwtService.new.authorized_client?(token)
       render json: { error: "Unauthorized access" }, status: :unauthorized
     end
   end

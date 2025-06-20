@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+# Ejecutar bundle install si es necesario
+bundle check || bundle install
+
+# Si el primer argumento es rails server, ejecutar db:prepare antes
+if [ "$1" == "rails" ] && [ "$2" == "server" ]; then
+  bundle exec rails db:prepare
+fi
+
+# Ejecutar el comando proporcionado, con bundle exec si es necesario
+if [ -z "$1" ]; then
+  exec bundle exec rails server -b 0.0.0.0 -p 3000
+else
+  exec bundle exec "$@"
+fi

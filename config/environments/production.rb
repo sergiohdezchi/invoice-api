@@ -42,7 +42,7 @@ Rails.application.configure do
   # config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  config.force_ssl = false
 
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
@@ -64,14 +64,7 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
   config.cache_store = :redis_cache_store, {
     url: ENV.fetch("REDIS_URL", "redis://localhost:6379/1"),
-    namespace: "invoice_api:#{Rails.env}",
-    connect_timeout: 30,
-    read_timeout: 0.2,
-    write_timeout: 0.2,
-    reconnect_attempts: 1,
-    error_handler: ->(method:, returning:, exception:) {
-      Rails.logger.error("Redis error: #{exception} - #{method}")
-    }
+    namespace: "invoice_api:#{Rails.env}"
   }
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter = :resque
@@ -80,7 +73,17 @@ Rails.application.configure do
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.
   config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :smtp
 
+  config.action_mailer.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 587,
+    domain: "gmail.com",
+    user_name: ENV["GMAIL_USERNAME"], # tu correo
+    password: ENV["GMAIL_PASSWORD"], # tu clave o app password
+    authentication: "plain",
+    enable_starttls_auto: true
+  }
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
