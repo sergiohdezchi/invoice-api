@@ -2,11 +2,11 @@ class InvoiceFetch
   attr_reader :start_date, :end_date, :page, :per_page, :errors
 
   def initialize(params = {})
+    @errors = []
     @start_date = parse_date(params[:start_date])
     @end_date = parse_date(params[:end_date]) || Date.today
     @page = (params[:page] || 1).to_i
     @per_page = (params[:per_page] || 25).to_i
-    @errors = []
   end
 
   def call
@@ -22,6 +22,8 @@ class InvoiceFetch
     return nil if date_string.blank?
 
     Date.parse(date_string)
+  rescue ArgumentError
+    nil
   end
 
   def generate_cache_key

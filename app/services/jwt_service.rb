@@ -1,6 +1,6 @@
 class JwtService
-  SECRET_KEY ||= Rails.application.secret_key_base
-  API_CLIENTS ||= Rails.application.credentials.api_clients.with_indifferent_access
+  SECRET_KEY = Rails.application.secret_key_base.freeze
+  API_CLIENTS = Rails.application.credentials.api_clients.with_indifferent_access.freeze
 
   def initialize; end
 
@@ -27,6 +27,6 @@ class JwtService
 
   def authorized_client?(token)
     decoded = decode(token)
-    decoded && decoded[:authorized] && API_CLIENTS.key?(decoded[:client_id])
+    decoded.present? && decoded[:authorized].present? && API_CLIENTS.key?(decoded[:client_id])
   end
 end

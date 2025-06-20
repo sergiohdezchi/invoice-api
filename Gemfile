@@ -44,6 +44,10 @@ group :development, :test do
   gem "faker", "~> 3.5"
 end
 
+group :test do
+  gem "sqlite3"
+end
+
 gem "jwt", "~> 3.0"
 
 gem "fast_jsonapi", "~> 1.5"
