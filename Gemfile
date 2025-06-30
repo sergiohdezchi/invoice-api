@@ -48,7 +48,7 @@ group :test do
   gem "sqlite3"
 end
 
-gem "jwt", "~> 3.0"
+gem "jwt", "~> 3.1"
 
 gem "fast_jsonapi", "~> 1.5"
 
