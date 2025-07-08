@@ -2,6 +2,13 @@
 
 **Invoice API** es un backend construido en Ruby on Rails para gestionar facturas. Incluye integración con **PostgreSQL**, **Redis** y **Sidekiq** para el manejo de tareas en segundo plano.
 
+## 🔐 Autenticación
+
+La API utiliza un sistema de autenticación basado en **Devise** y **JWT** (JSON Web Tokens). Para utilizar los endpoints protegidos, los clientes deben:
+
+1. Registrarse o iniciar sesión para obtener un token JWT
+2. Incluir el token en el header `Authorization` en cada solicitud en el formato: `Bearer {token}`
+
 ---
 
 ## 📦 Requisitos

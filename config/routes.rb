@@ -1,6 +1,7 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
+  devise_for :users
   mount Sidekiq::Web => "/sidekiq"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -13,8 +14,18 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      post "auth/token", to: "authentication#token"
-      resources :invoices, only: [ :index ]
+      # Rutas de autenticación
+      post "auth/register", to: "auth#register"
+      post "auth/login", to: "auth#login"
+      delete "auth/logout", to: "auth#logout"
+      
+      # Rutas de perfil de usuario
+      get "profile", to: "profile#show"
+      put "profile", to: "profile#update"
+      put "profile/password", to: "profile#update_password"
+      
+      # Recursos de la API
+      resources :invoices, only: [:index]
     end
   end
 end

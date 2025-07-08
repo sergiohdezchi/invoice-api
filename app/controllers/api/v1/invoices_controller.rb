@@ -2,6 +2,7 @@ module Api
   module V1
     class InvoicesController < ApplicationController
       def index
+        binding.irb
         return render json: { error: "start_date parameter is required" }, status: :bad_request unless index_params[:start_date].present?
 
         invoices = InvoiceFetch.new(index_params).call

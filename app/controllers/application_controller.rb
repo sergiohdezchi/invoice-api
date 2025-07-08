@@ -6,11 +6,22 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate_request
+    binding.irb
     header = request.headers["Authorization"]
     token = header.split(" ").last if header
 
-    unless token && JwtService.new.authorized_client?(token)
-      render json: { error: "Unauthorized access" }, status: :unauthorized
+    if token
+      decoded = TokenGeneratorService.decode(token)
+      if decoded && User.exists?(decoded[:user_id])
+        @current_user = User.find(decoded[:user_id])
+        return
+      end
     end
+
+    render json: { status: 'error', message: "No autorizado" }, status: :unauthorized
+  end
+
+  def current_user
+    @current_user
   end
 end
