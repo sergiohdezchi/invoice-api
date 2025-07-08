@@ -19,3 +19,6 @@ user.update!(
   active: true
 )
 puts "Usuario regular creado: #{user.email}"
+
+# Cargar seeds de facturas
+require_relative 'seeds/invoices'
