@@ -6,7 +6,6 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate_request
-    binding.irb
     header = request.headers["Authorization"]
     token = header.split(" ").last if header
 
