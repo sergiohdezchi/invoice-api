@@ -3,7 +3,7 @@
 <div align="center">
   <img src="images/banner.png" alt="Banner InvoiceVault Pro">
   <br>
-  <h3>Sistema Profesional de Gestión de Facturas</h3>
+  <h3>Sistema de Gestión Inteligente de Facturas</h3>
   <p>Potenciando la gestión financiera con tecnología de vanguardia</p>
   
   [![Ruby on Rails](https://img.shields.io/badge/Rails-7.2.2-red.svg)](https://rubyonrails.org/)
