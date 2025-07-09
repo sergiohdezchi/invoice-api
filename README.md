@@ -1,7 +1,7 @@
 # 🏆 InvoiceVault Pro API
 
 <div align="center">
-  <img src="images/logo.png?text=IV" alt="InvoiceVault Pro Logo" width="150" height="150">
+  <img src="images/banner.png" alt="Banner InvoiceVault Pro">
   <br>
   <h3>Sistema Profesional de Gestión de Facturas</h3>
   <p>Potenciando la gestión financiera con tecnología de vanguardia</p>
