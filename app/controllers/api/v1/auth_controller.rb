@@ -2,16 +2,15 @@ module Api
   module V1
     class AuthController < ApplicationController
       skip_before_action :authenticate_request, only: [:register, :login]
-      
-      # POST /api/v1/auth/register
+
       def register
         user = User.new(user_params)
-        
+
         if user.save
           token_service = TokenGeneratorService.new(user)
           token = token_service.generate_token
           expiration = Time.now + 24.hours
-          
+
           render json: {
             status: 'success',
             message: 'Usuario registrado exitosamente',
@@ -34,16 +33,15 @@ module Api
           }, status: :unprocessable_entity
         end
       end
-      
-      # POST /api/v1/auth/login
+
       def login
         user = User.find_by(email: params[:email])
-        
+
         if user&.valid_password?(params[:password])
           token_service = TokenGeneratorService.new(user)
           token = token_service.generate_token
           expiration = Time.now + 24.hours
-          
+
           render json: {
             status: 'success',
             message: 'Login exitoso',
@@ -65,8 +63,7 @@ module Api
           }, status: :unauthorized
         end
       end
-      
-      # DELETE /api/v1/auth/logout
+
       def logout
         render json: {
           status: 'success',

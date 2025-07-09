@@ -1,147 +1,233 @@
-# 🧾 Invoice API
+# 🏆 InvoiceVault Pro API
 
-**Invoice API** es un backend construido en Ruby on Rails para gestionar facturas. Incluye integración con **PostgreSQL**, **Redis** y **Sidekiq** para el manejo de tareas en segundo plano.
+<div align="center">
+  <img src="images/logo.png?text=IV" alt="InvoiceVault Pro Logo" width="150" height="150">
+  <br>
+  <h3>Sistema Profesional de Gestión de Facturas</h3>
+  <p>Potenciando la gestión financiera con tecnología de vanguardia</p>
+  
+  [![Ruby on Rails](https://img.shields.io/badge/Rails-7.2.2-red.svg)](https://rubyonrails.org/)
+  [![Ruby](https://img.shields.io/badge/Ruby-3.2+-blue.svg)](https://www.ruby-lang.org/)
+  [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Latest-blue.svg)](https://www.postgresql.org/)
+  [![Redis](https://img.shields.io/badge/Redis-Latest-red.svg)](https://redis.io/)
+  [![Sidekiq](https://img.shields.io/badge/Sidekiq-8.0-darkgreen.svg)](https://github.com/mperham/sidekiq)
+</div>
 
-## 🔐 Autenticación
+## 📊 Características Principales
 
-La API utiliza un sistema de autenticación basado en **Devise** y **JWT** (JSON Web Tokens). Para utilizar los endpoints protegidos, los clientes deben:
+**InvoiceVault Pro** es una potente API RESTful desarrollada en Ruby on Rails diseñada para gestionar facturas de manera eficiente y segura. Con una arquitectura moderna y escalable, proporciona una solución completa para la gestión financiera.
 
-1. Registrarse o iniciar sesión para obtener un token JWT
-2. Incluir el token en el header `Authorization` en cada solicitud en el formato: `Bearer {token}`
+- ✅ **Almacenamiento seguro** de facturas con detalles completos
+- ✅ **Búsqueda avanzada** por múltiples parámetros
+- ✅ **Reportes automáticos** de ventas diarias
+- ✅ **Notificaciones por correo** de facturas importantes
+- ✅ **Sistema de cache** optimizado para alta disponibilidad
+- ✅ **Procesamiento en segundo plano** para tareas intensivas
 
----
+## 🔐 Autenticación Segura
 
-## 📦 Requisitos
+InvoiceVault Pro implementa un sistema de autenticación robusto basado en **Devise** y **JSON Web Tokens (JWT)** que proporciona:
 
-### 🔁 Para correr con Docker
-- Docker
-- Docker Compose
+- 🔒 Registro seguro de usuarios
+- 🔑 Inicio de sesión con generación de tokens JWT
+- 🛡️ Protección de endpoints mediante autorización por tokens
+- ⏱️ Sistema de expiración de tokens configurable
 
-### 💻 Para correr sin Docker
-- Ruby 3.2+
-- Rails 7+
-- Redis
-- Bundler (`gem install bundler`)
+### Uso de la autenticación:
 
----
+1. Registre un usuario o inicie sesión para obtener un token JWT
+2. Incluya el token en el encabezado `Authorization` de cada solicitud:
+   ```
+   Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
+   ```
 
-## 🚀 Instalación
+## � Requisitos Técnicos
 
-### Clonar el repositorio
+### � Entorno Docker (Recomendado)
+- [Docker](https://www.docker.com/get-started) (v20.10+)
+- [Docker Compose](https://docs.docker.com/compose/install/) (v2.0+)
+
+### ⚙️ Entorno Local
+- [Ruby](https://www.ruby-lang.org/es/documentation/installation/) (v3.2+)
+- [Rails](https://guides.rubyonrails.org/getting_started.html) (v7.2+)
+- [PostgreSQL](https://www.postgresql.org/download/) (v14+)
+- [Redis](https://redis.io/download) (v6.0+)
+- [Bundler](https://bundler.io/) (`gem install bundler`)
+
+## 🚀 Guía de Instalación
+
+### 📥 Primeros pasos
 ```bash
+# Clonar el repositorio
 git clone https://github.com/sergiohdezchi/invoice-api.git
+
+# Ingresar al directorio del proyecto
 cd invoice-api
 ```
-### 🐳 Opción A: Usar Docker
-1. Edita .env.example actualiza los datos necesarios:
+
+### 🐳 Opción A: Despliegue con Docker
+
+1. **Configuración del entorno**
+
+
+
+   Edite el archivo `.env.example` con sus credenciales:
+   ```bash
+
+   # Configuración de Email
+   TOP_SALES_EMAIL=reportes@suempresa.com
+
+   # Configuración CORS
+   ALLOWED_ORIGINS=https://app.suempresa.com,http://localhost:4200
+   ```
+
+2. **Construcción y despliegue de contenedores**
+
+   ```bash
+   docker-compose up --build
+   ```
+
+   Este comando inicializará y conectará automáticamente todos los servicios necesarios:
+
+   | Servicio | Descripción | Puerto |
+   | --- | --- | --- |
+   | 🖥️ **API** | Servidor Rails API | 3000 |
+   | 🗄️ **PostgreSQL** | Base de datos | 5432 |
+   | 📋 **Redis** | Caché y colas | 6380 |
+   | 🔄 **Sidekiq** | Procesamiento en background | - |
+
+3. **Inicialización de la base de datos**
+   
+   Una vez que los contenedores estén funcionando:
+   
+   ```bash
+   docker compose exec app rails db:setup
+   ```
+
+4. **Acceso a los servicios**
+   
+   - **API REST**: [http://localhost:3000](http://localhost:3000)
+   - **Panel de Sidekiq**: [http://localhost:3000/sidekiq](http://localhost:3000/sidekiq)
+
+
+### ⚙️ Opción B: Instalación Local
+
+1. **Configuración del entorno**
+
+   ```bash
+   # Copiar archivo de configuración
+   cp .env.example .env
+   ```
+
+   Edite el archivo `.env` con la configuración para entorno local:
+   ```bash
+
+   # Redis
+   REDIS_URL=redis://localhost:6379/1
+   
+   # Email
+   TOP_SALES_EMAIL=reportes@suempresa.com
+   ```
+
+2. **Instalación de dependencias**
+
+   ```bash
+   # Instalar gemas requeridas
+   bundle install
+   
+   # Configurar base de datos
+   rails db:setup
+   ```
+
+3. **Iniciar los servicios**
+
+   ```bash
+   # En terminal 1: Iniciar servidor de Redis
+   sudo systemctl start redis-server
+   
+   # En terminal 2: Iniciar servidor de Rails
+   rails s
+   
+   # En terminal 3: Iniciar worker de Sidekiq
+   bundle exec sidekiq -C config/sidekiq.yml
+   ```
+
+4. **Acceso a los servicios**
+   
+   - **API REST**: [http://localhost:3000](http://localhost:3000)
+   - **Panel de Sidekiq**: [http://localhost:3000/sidekiq](http://localhost:3000/sidekiq)
+
+
+## 📊 Reportes y Funcionalidades
+
+### 📧 Generación de Reportes por Email
+
+InvoiceVault Pro incluye un sistema de reportes automáticos de ventas diarias que pueden enviarse por email.
+
+#### Opciones de ejecución:
+
+1. **En entorno local**
+   ```bash
+   bundle exec rake reports:queue_daily_top_sells
+   ```
+
+2. **En entorno Docker**
+   ```bash
+   docker compose exec app bundle exec rake reports:queue_daily_top_sells
+   ```
+
+### � Endpoints Principales
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| POST | `/api/v1/auth/register` | Registro de usuario |
+| POST | `/api/v1/auth/login` | Inicio de sesión |
+| GET | `/api/v1/profile` | Perfil del usuario |
+| GET | `/api/v1/invoices` | Listado de facturas |
+
+## ⚙️ Administración del Sistema
+
+### 🐳 Gestión de Contenedores
+
 ```bash
-# Database Configuration
-DB_HOST=test # Dirección del servidor de base de datos
-DB_USERNAME=test # Usuario de la base de datos
-DB_PASSWORD=test # Contraseña de la base de datos
-DB_NAME_PROD=test # Nombre de la base de datos
+# Iniciar servicios
+docker compose up
 
-# Email Configuration
-TOP_SALES_EMAIL=sergiohdez.chi@gmail.com # Dirección de correo donde se enviarán los reportes de ventas
+# Iniciar en segundo plano
+docker compose up -d
 
-# CORS Configuration
-ALLOWED_ORIGINS=http://localhost:4200 # Lista de orígenes permitidos para acceder a la API (CORS), separados por comas si hay más de uno
+# Reiniciar servicios
+docker compose restart
 
+# Detener servicios (conservando datos)
+docker compose down
+
+# Detener servicios y eliminar volúmenes
+docker compose down -v
 ```
 
-2. Construir y Levantar los Contenedores
-Ejecuta el siguiente comando para construir y ejecutar la aplicación con Docker:
+### 🔄 Tareas de Mantenimiento
 
 ```bash
-docker-compose up --build
+# Ejecutar migraciones
+docker compose exec app rails db:migrate
+
+# Cargar datos iniciales
+docker compose exec app rails db:seed
+
+# Limpiar caché
+docker compose exec app rails r "Rails.cache.clear"
+
+# Ver logs de la aplicación
+docker compose logs -f app
 ```
 
-Esto iniciará los siguientes servicios:
+## 🛡️ Seguridad y Buenas Prácticas
 
-- Redis en el puerto 6380
-- Rails API en el puerto 3000
-- Sidekiq
+- Todos los endpoints de la API están protegidos con autenticación JWT
+- Las contraseñas se almacenan encriptadas usando BCrypt
+- Implementación de CORS para proteger contra solicitudes no autorizadas
 
-3. Acceder a la Aplicación
-Una vez que los contenedores estén en funcionamiento, puedes acceder a:
-- http://0.0.0.0:3000/sidekiq
+## 📄 Licencia
 
-
-### 🐳 Opción B: Correr en local
-
-1. crea un archivo .env y actualiza los datos necesarios
-```bash
-docker-compose up --build
-# Database credentials
-DB_HOST=test # Dirección del servidor de base de datos
-DB_USERNAME=test # Usuario de la base de datos
-DB_PASSWORD=test # Contraseña de la base de datos
-DB_NAME_DEV=testinvoices # Nombre de la base de datos
-DB_NAME_TEST=test
-DB_NAME_PROD=test
-
-REDIS_URL=redis://localhost:6379/1 # Redis URL
-
-```
-2. Instalacion de dependencias
-```bash
-bundle install
-```
-
-2. Iniciar rails
-
-```bash
-rails s
-```
-
-3. Iniciar redis
-```bash
-sudo systemctl start redis-server
-```
-
-4. iniciar sidekiq
-```bash
-bundle exec sidekiq -C config/sidekiq.yml
-```
-
-5. Acceder a la Aplicación
-
-Una vez que se iniciaron los servicios
-- http://0.0.0.0:3000/sidekiq
-
-
-### Envio de Correo con rake task
-
-1. Ejecucion sin docker
-```bash
-bundle exec rake reports:queue_daily_top_sells
-```
-2. Ejecucion con docker
-```bash
-docker compose exec app bundle exec rake reports:queue_daily_top_sells
-```
-
-
-## 📌 Comandos Útiles
-
-1. Reiniciar la Aplicación**
-Si necesitas reiniciar los contenedores, usa:
-```sh
-docker-compose restart
-```
-
-2. Detener la Aplicación**
-Para detener los contenedores sin eliminar los volúmenes:
-```sh
-docker-compose down
-```
-
-Si deseas eliminar los volúmenes (base de datos y caché de Redis):
-```sh
-docker-compose down -v
-```
-3. Iniciar la Aplicación**
-Para iniciar los contenedores:
-```sh
-docker-compose up
-```
+Este proyecto está licenciado bajo los términos de la [Licencia MIT](LICENSE).
