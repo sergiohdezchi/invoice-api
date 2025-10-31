@@ -50,7 +50,7 @@ end
 
 gem "jwt", "~> 2.7"
 gem "devise", "~> 4.9"
-gem "devise-jwt", "~> 0.11.0"
+gem "devise-jwt", "~> 0.12.1"
 gem "bcrypt", "~> 3.1.7"
 
 gem "fast_jsonapi", "~> 1.5"
